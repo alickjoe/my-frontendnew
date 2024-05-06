@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/mui-toolpad/v0.1.52/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  alias:
+    - RRax4yc
+  title: AZ CPT Bot
+  displayName: main
+  content:
+    - component: Image
+      name: image
+      props:
+        src: logo.svg
+        height: 200
+        loading: true
+      layout:
+        horizontalAlign: center
+        verticalAlign: center
+    - component: Text
+      name: text
+      layout:
+        horizontalAlign: center
+        verticalAlign: center
+      props:
+        value: AZ GPT Bot
+        variant: h2
+    - component: Text
+      name: text1
+      props:
+        mode: text
+        value: 这是一个基于GPT4的聊天助手 请在下面输入你的问题
+        loading: false
+        variant: subtitle1
+      layout:
+        horizontalAlign: center
+        verticalAlign: center
+    - component: TextField
+      name: textField
+      layout:
+        horizontalAlign: center
+        verticalAlign: center
+      props:
+        label: ""
+        variant: outlined
+        size: medium
+        fullWidth: true
+        password: false
+        placeholder: 请在这里输入问题
+        disabled: false
+        name: inputMessage
+        isRequired: true
+    - component: Button
+      name: button
+      layout:
+        horizontalAlign: center
+        verticalAlign: center
+      props:
+        content: 提交
+        variant: contained
+        size: small
+        color: primary
+        loading:
+          $$jsExpression: query.isFetching
+        onClick:
+          $$jsExpressionAction: query.fetch()
+    - component: Text
+      name: text2
+      props:
+        mode: text
+        loading:
+          $$jsExpression: query.isFetching
+        value:
+          $$jsExpression: query.data ?? ""
+        sx:
+          background-color: "#f4f4f4"
+          padding: 10px
+          border-radius: 5px
+  display: standalone
+  queries:
+    - name: query
+      mode: mutation
+      query:
+        kind: rest
+        url: http://kafka.alickzhou.com:8080/chat
+        headers:
+          - name: Content-Type
+            value: application/json;charset=UTF-8
+          - name: Access-Control-Allow-Origin
+            value: "*"
+        body:
+          kind: raw
+          content:
+            $$jsExpression: '`{"message":"${parameters.message}"}`'
+          contentType: application/json
+        method: POST
+        response:
+          kind: json
+        transformEnabled: true
+        transform: return data.response;
+      parameters:
+        - name: message
+          value:
+            $$jsExpression: textField.value

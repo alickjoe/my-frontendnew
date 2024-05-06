@@ -1,0 +1,44 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 100px; /* 调整高度以适应多行输入 */
+  width: 500px; /* 根据需要调整宽度 */
+  resize: vertical; /* 允许垂直调整大小 */
+}
+
+.submit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.result {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+}

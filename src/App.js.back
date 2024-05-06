@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+function App() {
+  const [input, setInput] = useState('');
+  const [result, setResult] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://kafka.alickzhou.com:8080/chat', { message: input },{headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    }});
+      //console.info(response);
+      setResult(response.data.response);
+    } catch (error) {
+      console.error('API call failed:', error);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Enter something:
+          <input type="combo" value={input} onChange={(e) => setInput(e.target.value)} style={{height:100,width:500}} />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+      <div>Result: {result}</div>
+    </div>
+  );
+}
+
+export default App;
